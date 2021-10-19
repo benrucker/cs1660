@@ -13,7 +13,7 @@ Code is contained in [`Sentiment Analysis/`](Sentiment%20Analysis).
 | Webapp | https://hub.docker.com/repository/docker/brucker/sentiment-analysis-webapp |
 
 ## Video
-[Link](walkthru.mp4)
+https://user-images.githubusercontent.com/12519846/137835969-2d02a9ab-add8-4068-83a4-d7cd362889ab.mp4
 
 ## Steps to make this happen
 
