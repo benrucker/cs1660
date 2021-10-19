@@ -19,7 +19,7 @@ Code is contained in [`Sentiment Analysis/`]('Sentiment%20Analysis').
 
 1. Pull the code from [here](https://github.com/rinormaloku/k8s-mastery)
 2. Build the webapp
-    * `cd sa-web-app`
+    * `cd sa-webapp`
     * `mvn install`
 3. Build the webapp docker image
     * `docker build -t brucker/sentiment-analysis-webapp:1.0 .`
