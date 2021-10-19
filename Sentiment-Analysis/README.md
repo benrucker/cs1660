@@ -1,6 +1,6 @@
 # Sentiment Analysis on GKE
 
-Code is contained in [`Sentiment Analysis/`](Sentiment%20Analysis).
+Code is contained in [`code/`](code).
 
 ## Screenshot
 ![screenshot.png](screenshot.png)
