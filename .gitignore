@@ -1,14 +1,11 @@
-# SA Frontend ignored files
+# Sentiment Analysis proj
 node_modules/
 **/sa-frontend/build/
-
-# SA Logic ignored files
 venv/
-
-# SA WebApp ignored files
 target/
 .mvn/
 !**/maven-wrapper.jar
+.venv
 
 # IDE ignored files
 .idea/
