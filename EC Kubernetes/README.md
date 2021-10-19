@@ -13,7 +13,9 @@ Code is contained in [`Sentiment Analysis/`](Sentiment%20Analysis).
 | Webapp | https://hub.docker.com/repository/docker/brucker/sentiment-analysis-webapp |
 
 ## Video
-[Link](walkthru.mp4)
+https://user-images.githubusercontent.com/12519846/137835561-2277d75a-4ca5-481e-9ffe-2953f9649578.mp4
+
+
 
 ## Steps to make this happen
 
