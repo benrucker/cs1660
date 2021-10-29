@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jupyter
+  labels:
+    app: jupyter
+spec:
+  containers:
+    - image: brucker/datascience-notebook
+      name: jupyter
