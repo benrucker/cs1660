@@ -14,4 +14,6 @@
 * Jupyter Notebook:
     * https://hub.docker.com/repository/docker/brucker/datascience-notebook
     * [jupyternb/](jupyternb/)
-
+* SonarQube & SonarScanner
+    * https://hub.docker.com/r/sonarsource/sonar-scanner-cli
+    * [sonar/](sonar/)
