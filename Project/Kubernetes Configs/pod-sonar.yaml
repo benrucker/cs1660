@@ -6,5 +6,5 @@ metadata:
     app: sonar
 spec:
   containers:
-    - image: brucker/sonar
+    - image: sonarsource/sonar-scanner-cli
       name: sonar
