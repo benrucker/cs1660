@@ -24,8 +24,6 @@
 
 ## Steps
 
-## Steps to make this happen
-
 1. Activate GKE
 2. Make a default cluster
 3. Authenticate a cloud shell to the cluster
