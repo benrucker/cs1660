@@ -1,0 +1,1 @@
+FROM sequenceiq/hadoop-docker

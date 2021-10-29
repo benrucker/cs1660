@@ -1,0 +1,3 @@
+screen -t microservice_matrix   0
+select 0
+stuff "python app.py\n"
