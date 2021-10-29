@@ -7,4 +7,11 @@ metadata:
 spec:
   containers:
     - image: sonarsource/sonar-scanner-cli
-      name: sonar
+      name: sonarscanner
+      args: ["--rm",
+             "-e SONAR_HOST_URL=\"http://localhost\"",
+             "-e SONAR_LOGIN=\"admin\"",
+            #  "-v \"${YOUR_REPO}:/usr/src\"",
+             "sonarsource/sonar-scanner-cli"]
+    - image: sonarqube
+      name: sonarqube
