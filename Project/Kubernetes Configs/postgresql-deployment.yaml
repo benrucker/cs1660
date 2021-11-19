@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\bruck\Downloads\kompose-windows-amd64.exe convert
+    kompose.version: 1.24.0 (7c629530)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: postgresql
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\bruck\Downloads\kompose-windows-amd64.exe convert
+        kompose.version: 1.24.0 (7c629530)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: postgresql
+    spec:
+      containers:
+        - env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: POSTGRESQL_DATABASE
+              value: bitnami_sonarqube
+            - name: POSTGRESQL_USERNAME
+              value: bn_sonarqube
+          image: docker.io/bitnami/postgresql:13
+          name: postgresql
+          resources: {}
+          volumeMounts:
+            - mountPath: /bitnami/postgresql
+              name: downloads-postgresql-data
+      restartPolicy: Always
+      volumes:
+        - name: downloads-postgresql-data
+          persistentVolumeClaim:
+            claimName: downloads-postgresql-data
+status: {}

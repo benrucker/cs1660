@@ -6,14 +6,14 @@ metadata:
     app: sonar
 spec:
   containers:
-    - image: sonarsource/sonar-scanner-cli
-      name: sonarscanner
-      env: 
-        - name: SONAR_HOST_URL
-          value: http://localhost
-        - name: SONAR_LOGIN
-          value: admin
-        - name: SONAR_PASSWORD
-          value: admin
+    # - image: sonarsource/sonar-scanner-cli
+    #   name: sonarscanner
+    #   env: 
+    #     - name: SONAR_HOST_URL
+    #       value: http://localhost
+    #     - name: SONAR_LOGIN
+    #       value: admin
+    #     - name: SONAR_PASSWORD
+    #       value: admin
     - image: sonarqube
       name: sonarqube
