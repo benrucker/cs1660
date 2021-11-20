@@ -1,4 +1,5 @@
 import subprocess
+import hashlib
 # look into https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/
 
 def launch_service(service):
@@ -18,28 +19,51 @@ def spark():
 
 
 def sonar():
-    print("Would you like to (1) analyze a new project or (2) go straight to SonarQube?")
+    print("Would you like to\n\n\t(1) download and analyze a project or (2) go straight to SonarQube?")
     choice = input("> ")
     if choice == "1":
-        print("Please enter the path to the project you would like to analyze.")
-        path = input("> ")
-        result = subprocess.run(
-            [
-                "kubectl", "exec", "sonar", "--",
-                "curl", "--data-urlencode", f"name={path}&project={path}", "http://localhost:9000/api/projects/create", "-X", "POST"
-            ], check=True, stdout=subprocess.PIPE
-        )
-        result = subprocess.run(
-            [
-                "kubectl", "exec", "sonar", "--",
-                "sonar-scanner", path # add the rest of the arguments, login, project, etc
-            ], check=True, stdout=subprocess.PIPE
-        )
-    #
-    # unconditionally go to sonarqube
-    # get path to sonarqube pod
+        get_project()
+
     subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
     pass
+
+
+def get_project():
+    print("Please enter the remote git URL to the project you would like to analyze.\n\te.g. https://github.com/benrucker/cs1660")
+    path = input("> ")
+    hashpath = hashlib.sha256(path.encode()).hexdigest()
+    exists = subprocess.run(
+        [
+            "kubectl", "exec", "sonar", "--",
+            "test -d " + hashpath
+        ]
+    )
+    if exists.returncode == 0:
+        pull = subprocess.run(
+            [
+                "kubectl", "exec", "sonar", "--",
+                "cd " + hashpath + " && git pull"
+            ]
+        )
+    else:
+        result = subprocess.run(
+            [
+                "kubectl", "exec", "sonar", "--",
+                "git", "clone", path, "--depth=1", "--recurse-submodules", "--progress", hashpath, "--",
+            ], check=True, stdout=subprocess.PIPE
+        )
+    result = subprocess.run(
+        [
+            "kubectl", "exec", "sonar", "--",
+            "curl", "--data-urlencode", f"name={hashpath}&project={hashpath}", "http://localhost:9000/api/projects/create"
+        ], check=True, stdout=subprocess.PIPE
+    )
+    result = subprocess.run(
+        [
+            "kubectl", "exec", "sonar", "--",
+            "sonar-scanner", f"-Dsonar.projectkey={hashpath}", f"-Dsonar.projectName={hashpath}", "-Dsonar.login=admin", "-Dsonar.password=password", f"-Dsonar.projectBaseDir={hashpath}", "-Dsonar.cobol.copy.directories=/copy"
+        ], check=True, stdout=subprocess.PIPE
+    )
 
 
 SERVICES = {
