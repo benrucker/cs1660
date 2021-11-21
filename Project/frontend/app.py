@@ -124,7 +124,7 @@ def wait_for_all_launches(api_instance):
 
 
 def wait_for_launch(api_instance, name):
-    print("Waiting for services to launch...")
+    print(f"Waiting for {name} to launch...")
     while True:
         resp = api_instance.read_namespaced_pod(name=name,
                                                 namespace='default')
