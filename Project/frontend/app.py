@@ -16,26 +16,27 @@ from kubernetes.stream import stream
 # if not, just print out the URL for the user to paste into their browser
 # that, or convert to a web server
 
-# hadoop_pod = None
-# jupyter_pod = None
-# spark_pod = None
-# sonar_pod = None
-
 
 def launch_service(service, api_instance):
     SERVICES[service](api_instance)
 
 
 def hadoop(api_instance):
-    subprocess.run(['xdg-open', "hadoop.svc.cluster.local:9000"], check=True)
+    service = api_instance.get_namedspaced_service('hadoop-service', 'default')
+    print(service)
+    # subprocess.run(['xdg-open', "hadoop.svc.cluster.local:9000"], check=True)
 
 
 def jupyter(api_instance):
-    subprocess.run(['xdg-open', "jupyter.svc.cluster.local:9000"], check=True)
+    service = api_instance.get_namedspaced_service('jupyter-service', 'default')
+    print(service)
+    # subprocess.run(['xdg-open', "jupyter.svc.cluster.local:9000"], check=True)
 
 
 def spark(api_instance):
-    subprocess.run(['xdg-open', "spark.svc.cluster.local:9000"], check=True)
+    service = api_instance.get_namedspaced_service('spark-service', 'default')
+    print(service)
+    # subprocess.run(['xdg-open', "spark.svc.cluster.local:9000"], check=True)
 
 
 def sonar(api_instance):
@@ -44,7 +45,9 @@ def sonar(api_instance):
     if choice == "1":
         get_project(api_instance)
 
-    subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
+    service = api_instance.get_namedspaced_service('sonar-service', 'default')
+    print(service)
+    # subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
 
 
 def get_project(api_instance):
