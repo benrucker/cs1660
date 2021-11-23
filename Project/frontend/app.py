@@ -1,9 +1,10 @@
 import subprocess
 import hashlib
 import time
+import os
 
 from kubernetes import config
-from kubernetes.client import Configuration
+from kubernetes.client import Configuration, ApiClient
 from kubernetes.client.api import core_v1_api
 from kubernetes.client.rest import ApiException
 from kubernetes.stream import stream
@@ -129,24 +130,23 @@ def wait_for_all_launches(api_instance):
 def wait_for_launch(api_instance, name):
     print(f"Waiting for {name} to launch...")
     while True:
-        resp = api_instance.read_namespaced_pod(name=name,
-                                                namespace='default')
-        if resp.status.phase == 'Running':
-            break
-        time.sleep(1)
+        try:
+            resp = api_instance.read_namespaced_pod(name=name,
+                                                    namespace='default')
+            if resp.status.phase != 'Pending':
+                print(name, 'is running')
+                break
+        except ApiException as e:
+            pass
+        finally:
+            time.sleep(1)
     return resp
 
 
 def get_api():
-    config.load_kube_config()
-    try:
-        c = Configuration().get_default_copy()
-    except AttributeError:
-        c = Configuration()
-        c.assert_hostname = False
-    Configuration.set_default(c)
-    core_v1 = core_v1_api.CoreV1Api()
-    return core_v1
+    config.load_incluster_config()
+    api = core_v1_api.CoreV1Api()
+    return api
 
 
 SERVICES = {
@@ -159,7 +159,7 @@ SERVICES = {
 
 if __name__ == '__main__':
     core_v1 = get_api()
-    wait_for_launch(core_v1)
+    wait_for_all_launches(core_v1)
 
     print('Welcome to the Microservices Matrix! Which tool would you like to open?')
 
