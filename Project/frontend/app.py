@@ -23,19 +23,19 @@ def launch_service(service, api_instance):
 
 
 def hadoop(api_instance):
-    service = api_instance.read_namespaced_service('hadoop-service', 'default')
+    service = api_instance.read_namespaced_service('hadoop', 'default')
     print(service)
     # subprocess.run(['xdg-open', "hadoop.svc.cluster.local:9000"], check=True)
 
 
 def jupyter(api_instance):
-    service = api_instance.read_namespaced_service('jupyter-service', 'default')
+    service = api_instance.read_namespaced_service('jupyter', 'default')
     print(service)
     # subprocess.run(['xdg-open', "jupyter.svc.cluster.local:9000"], check=True)
 
 
 def spark(api_instance):
-    service = api_instance.read_namespaced_service('spark-service', 'default')
+    service = api_instance.read_namespaced_service('spark', 'default')
     print(service)
     # subprocess.run(['xdg-open', "spark.svc.cluster.local:9000"], check=True)
 
@@ -46,7 +46,7 @@ def sonar(api_instance):
     if choice == "1":
         get_project(api_instance)
 
-    service = api_instance.read_namespaced_service('sonar-service', 'default')
+    service = api_instance.read_namespaced_service('sonar', 'default')
     print(service)
     # subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
 
