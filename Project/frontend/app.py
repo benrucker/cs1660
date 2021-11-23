@@ -23,21 +23,15 @@ def launch_service(service, api_instance):
 
 
 def hadoop(api_instance):
-    service = api_instance.read_namespaced_service('hadoop', 'default')
-    print(service)
-    # subprocess.run(['xdg-open', "hadoop.svc.cluster.local:9000"], check=True)
+    show_lb_url(api_instance, 'hadoop', 'Apache Hadoop')
 
 
 def jupyter(api_instance):
-    service = api_instance.read_namespaced_service('jupyter', 'default')
-    print(service)
-    # subprocess.run(['xdg-open', "jupyter.svc.cluster.local:9000"], check=True)
+    show_lb_url(api_instance, 'jupyter', 'Jupyter Notebook')
 
 
 def spark(api_instance):
-    service = api_instance.read_namespaced_service('spark', 'default')
-    print(service)
-    # subprocess.run(['xdg-open', "spark.svc.cluster.local:9000"], check=True)
+    show_lb_url(api_instance, 'spark', 'Apache Spark')
 
 
 def sonar(api_instance):
@@ -46,11 +40,7 @@ def sonar(api_instance):
     if choice == "1":
         get_project(api_instance)
 
-    service = api_instance.read_namespaced_service('sonar', 'default')
-    ip = service.status.load_balancer.ingress[0].ip
-    port = service.spec.ports[0].port
-    print(f"Open SonarQube by clicking this link or pasting it in your browser:")
-    print(f"\thttp://{ip}:{port}")
+    show_lb_url(api_instance, 'sonar', 'SonarQube')
 
 
 def get_project(api_instance):
@@ -86,6 +76,14 @@ def get_project(api_instance):
     resp.write_stdin(command + '\n')
     output = resp.read_stdout(timeout=120)
     print(output)
+
+
+def show_lb_url(api_instance, name, pretty_name):
+    service = api_instance.read_namespaced_service(name, 'default')
+    ip = service.status.load_balancer.ingress[0].ip
+    port = service.spec.ports[0].port
+    print(f"Open {pretty_name} by clicking this link or pasting it in your browser:")
+    print(f"\thttp://{ip}:{port}")
 
 
 def wait_for_all_launches(api_instance):
