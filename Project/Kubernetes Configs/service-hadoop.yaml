@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hadoop-service
+  name: hadoop
 spec:
   selector:
     app: hadoop
@@ -9,4 +9,4 @@ spec:
     - port: 9000
       targetPort: 9000
       protocol: TCP
-      name: hadoop-service
+      name: hadoop
