@@ -6,7 +6,10 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["pods"]
-  verbs: ["get", "watch", "list"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
