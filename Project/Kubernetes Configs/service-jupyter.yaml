@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: jupyter
 spec:
+  type: LoadBalancer
   selector:
     app: jupyter
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 9000
+      targetPort: 8888
       protocol: TCP
-      name: jupyter-port

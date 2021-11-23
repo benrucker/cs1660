@@ -8,3 +8,5 @@ spec:
   containers:
     - image: brucker/datascience-notebook
       name: jupyter
+      ports:
+        - containerPort: 8888
