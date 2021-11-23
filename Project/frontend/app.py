@@ -19,7 +19,7 @@ from kubernetes.stream import stream
 
 
 def launch_service(service, api_instance):
-    SERVICES[service](api_instance)
+    service(api_instance)
 
 
 def hadoop(api_instance):
@@ -162,11 +162,12 @@ if __name__ == '__main__':
 
     print('Welcome to the Microservices Matrix! Which tool would you like to open?')
 
-    for i, service in enumerate(SERVICES):
+    indexed = list(SERVICES.keys())
+    for i, service in enumerate(indexed):
         print(f'{i+1}: {service}')
 
     choice = int(input('> ')) - 1
 
-    print(f'Launching {SERVICES[choice]}...')
+    print(f'Launching {indexed[choice]}...')
     
-    launch_service(SERVICES[choice], core_v1)
+    launch_service(SERVICES[indexed[choice]], core_v1)
