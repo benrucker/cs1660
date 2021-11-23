@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: spark
 spec:
+  type: LoadBalancer
   selector:
     app: spark
   ports:

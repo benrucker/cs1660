@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: hadoop
 spec:
+  type: LoadBalancer
   selector:
     app: hadoop
   ports:
