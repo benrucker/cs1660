@@ -47,8 +47,10 @@ def sonar(api_instance):
         get_project(api_instance)
 
     service = api_instance.read_namespaced_service('sonar', 'default')
-    print(service)
-    # subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
+    ip = service.status.load_balancer.ingress[0].ip
+    port = service.spec.ports[0].port
+    print(f"Open SonarQube by clicking this link or pasting it in your browser:")
+    print(f"\thttp://{ip}:{port}")
 
 
 def get_project(api_instance):
