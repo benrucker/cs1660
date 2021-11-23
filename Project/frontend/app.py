@@ -135,12 +135,11 @@ def wait_for_launch(api_instance, name):
                                                     namespace='default')
             if resp.status.phase != 'Pending':
                 print(name, 'is running')
-                break
+                return resp
+            else:
+                time.sleep(1)
         except ApiException as e:
-            pass
-        finally:
             time.sleep(1)
-    return resp
 
 
 def get_api():
