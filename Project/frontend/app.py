@@ -23,19 +23,19 @@ def launch_service(service, api_instance):
 
 
 def hadoop(api_instance):
-    service = api_instance.get_namedspaced_service('hadoop-service', 'default')
+    service = api_instance.read_namespaced_service('hadoop-service', 'default')
     print(service)
     # subprocess.run(['xdg-open', "hadoop.svc.cluster.local:9000"], check=True)
 
 
 def jupyter(api_instance):
-    service = api_instance.get_namedspaced_service('jupyter-service', 'default')
+    service = api_instance.read_namespaced_service('jupyter-service', 'default')
     print(service)
     # subprocess.run(['xdg-open', "jupyter.svc.cluster.local:9000"], check=True)
 
 
 def spark(api_instance):
-    service = api_instance.get_namedspaced_service('spark-service', 'default')
+    service = api_instance.read_namespaced_service('spark-service', 'default')
     print(service)
     # subprocess.run(['xdg-open', "spark.svc.cluster.local:9000"], check=True)
 
@@ -46,7 +46,7 @@ def sonar(api_instance):
     if choice == "1":
         get_project(api_instance)
 
-    service = api_instance.get_namedspaced_service('sonar-service', 'default')
+    service = api_instance.read_namespaced_service('sonar-service', 'default')
     print(service)
     # subprocess.run(['xdg-open', "sonar.svc.cluster.local:9000"], check=True)
 
@@ -55,68 +55,35 @@ def get_project(api_instance):
     print("Please enter the remote git URL to the project you would like to analyze.\n\te.g. https://github.com/benrucker/cs1660")
     path = input("> ")
     hashpath = hashlib.sha256(path.encode()).hexdigest()
-    command = [
-            "/bin/sh",
-            "-c",
-            "test -d " + hashpath
-        ]
     resp = stream(api_instance.connect_get_namespaced_pod_exec,
                   'sonar',
                   'default',
-                  command=command,
-                  stderr=True, stdin=False,
-                  stdout=True, tty=False)
-    print(resp)
-    if resp.status == 0:
-        command = [
-                "/bin/sh",
-                "-c",
-                "cd " + hashpath + " && git pull"
-        ]
-        resp = stream(api_instance.connect_get_namespaced_pod_exec,
-                      'sonar',
-                      'default',
-                      command=command,
-                      stderr=True, stdin=False,
-                      stdout=True, tty=False)
-        print(resp)
+                  command=['sh'],
+                  stderr=True, stdin=True,
+                  stdout=True, tty=False,
+                  _preload_content=False)
+    command = "test -d " + hashpath + '&& echo $?'
+    resp.write_stdin(command + '\n')
+    return_code = resp.read_stdout(timeout=10)
+    print(return_code)
+    if len(return_code) != 0:
+        command = "cd " + hashpath + " && git pull"
+        resp.write_stdin(command + '\n')
+        output = resp.read_stdout(timeout=120)
+        print(output)
     else:
-        command = [
-                "/bin/sh",
-                "-c",
-                "git", "clone", path, "--depth=1", "--recurse-submodules", "--progress", hashpath, "--",
-            ]
-        resp = stream(api_instance.connect_get_namespaced_pod_exec,
-                      'sonar',
-                      'default',
-                      command=command,
-                      stderr=True, stdin=False,
-                      stdout=True, tty=False)
-        print(resp)
-    command = [
-            "/bin/sh",
-            "-c",
-            "curl", "--data-urlencode", f"name={hashpath}&project={hashpath}", "http://localhost:9000/api/projects/create"
-        ]
-    resp = stream(api_instance.connect_get_namespaced_pod_exec,
-                  'sonar',
-                  'default',
-                  command=command,
-                  stderr=True, stdin=False,
-                  stdout=True, tty=False)
-    print(resp)
-    command = [
-            "/bin/sh",
-            "-c",
-            "sonar-scanner", f"-Dsonar.projectkey={hashpath}", f"-Dsonar.projectName={hashpath}", "-Dsonar.login=admin", "-Dsonar.password=password", f"-Dsonar.projectBaseDir={hashpath}", "-Dsonar.cobol.copy.directories=/copy"
-        ]
-    resp = stream(api_instance.connect_get_namespaced_pod_exec,
-                  'sonar',
-                  'default',
-                  command=command,
-                  stderr=True, stdin=False,
-                  stdout=True, tty=False)
-    print(resp)
+        command = "git clone " + path + " --depth=1 --recurse-submodules --progress " + hashpath
+        resp.write_stdin(command + '\n')
+        output = resp.read_stdout(timeout=120)
+        print(output)
+    command = f"curl --data-urlencode name={hashpath}&project={hashpath} http://localhost:9000/api/projects/create"
+    resp.write_stdin(command + '\n')
+    output = resp.read_stdout(timeout=120)
+    print(output)
+    command = f"sonar-scanner -Dsonar.projectkey={hashpath} -Dsonar.projectName={hashpath} -Dsonar.login=admin -Dsonar.password=password -Dsonar.projectBaseDir={hashpath} -Dsonar.cobol.copy.directories=/copy"
+    resp.write_stdin(command + '\n')
+    output = resp.read_stdout(timeout=120)
+    print(output)
 
 
 def wait_for_all_launches(api_instance):
