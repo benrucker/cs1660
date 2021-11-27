@@ -13,6 +13,16 @@ spec:
   ports:
     - port: 8088
       targetPort: 8088
+      name: resourcemanager
+    - port: 8033
+      targetPort: 8033
+      name: ipc
+    - port: 8032
+      targetPort: 8032
+      name: ipc2
+    - port: 8031
+      targetPort: 8031
+      name: ipc3
   selector:
     io.kompose.service: resourcemanager
 status:

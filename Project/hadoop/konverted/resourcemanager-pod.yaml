@@ -98,7 +98,7 @@ spec:
               key: MAPRED_CONF_yarn_app_mapreduce_am_env
               name: hadoop-env
         - name: SERVICE_PRECONDITION
-          value: namenode:50070 datanode:50075
+          value: namenode:9870 datanode:9864
         - name: YARN_CONF_mapred_map_output_compress_codec
           valueFrom:
             configMapKeyRef:

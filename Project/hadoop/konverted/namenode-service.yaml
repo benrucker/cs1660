@@ -11,8 +11,14 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 50070
-      targetPort: 50070
+    - port: 9870
+      targetPort: 9870
+      protocol: TCP
+      name: namenode
+    - port: 9000
+      targetPort: 9000
+      protocol: TCP
+      name: ipc
   selector:
     io.kompose.service: namenode
 status:

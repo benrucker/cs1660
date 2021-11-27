@@ -11,8 +11,18 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 50075
-      targetPort: 50075
+    - port: 9864
+      targetPort: 9864
+      protocol: TCP
+      name: datanode
+    - port: 9867
+      targetPort: 9867
+      protocol: TCP
+      name: ipc
+    - port: 9866
+      targetPort: 9866
+      protocol: TCP
+      name: ipc2
   selector:
     io.kompose.service: datanode
 status:

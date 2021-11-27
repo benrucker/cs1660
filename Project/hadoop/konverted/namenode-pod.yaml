@@ -217,7 +217,7 @@ spec:
       image: brucker/hadoop-namenode
       name: namenode
       ports:
-        - containerPort: 50070
+        - containerPort: 9000
       resources: {}
       volumeMounts:
         - mountPath: /hadoop/dfs/name
