@@ -13,4 +13,8 @@ target/
 .idea/
 *.iml
 .vscode
+
+
 Project/sonar/sonar-scanner-4.6.2.2472-linux/
+Project/spark/spark-3.2.0-bin-hadoop3.2/
+*.exe
