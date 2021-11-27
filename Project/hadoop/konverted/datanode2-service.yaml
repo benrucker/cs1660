@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\bruck\OneDrive - University of Pittsburgh\classes\cs1660\cs1660\Project\kompose-windows-amd64.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: datanode2
+  name: datanode2
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9864
+      targetPort: 9864
+      protocol: TCP
+      name: datanode2
+    - port: 9867
+      targetPort: 9867
+      protocol: TCP
+      name: ipc
+    - port: 9866
+      targetPort: 9866
+      protocol: TCP
+      name: ipc2
+  selector:
+    io.kompose.service: datanode2
+status:
+  loadBalancer: {}
