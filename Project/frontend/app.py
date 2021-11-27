@@ -23,7 +23,7 @@ def launch_service(service, api_instance):
 
 
 def hadoop(api_instance):
-    show_lb_url(api_instance, 'hadoop', 'Apache Hadoop')
+    show_lb_url(api_instance, 'namenode', 'Apache Hadoop')
 
 
 def jupyter(api_instance):
@@ -88,10 +88,19 @@ def show_lb_url(api_instance, name, pretty_name):
 
 def wait_for_all_launches(api_instance):
     global hadoop_pod, jupyter_pod, spark_pod, sonar_pod
-    hadoop_pod = wait_for_launch(api_instance, 'hadoop')
+    wait_for_hadoop(api_instance)
     jupyter_pod = wait_for_launch(api_instance, 'jupyter')
     spark_pod = wait_for_launch(api_instance, 'spark')
+    spark_worker_pod = wait_for_launch(api_instance, 'spark-worker')
     sonar_pod = wait_for_launch(api_instance, 'sonar')
+
+
+def wait_for_hadoop(api):
+    wait_for_launch(api, 'namenode')
+    wait_for_launch(api, 'datanode')
+    wait_for_launch(api, 'datanode2')
+    wait_for_launch(api, 'resourcemanager')
+    wait_for_launch(api, 'nodemanager')
 
 
 def wait_for_launch(api_instance, name):
@@ -104,8 +113,10 @@ def wait_for_launch(api_instance, name):
                 print(name, 'is running')
                 return resp
             else:
+                print(name, 'is pending')
                 time.sleep(1)
         except ApiException as e:
+            print(e)
             time.sleep(1)
 
 
