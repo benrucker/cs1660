@@ -9,7 +9,6 @@ metadata:
     io.kompose.service: historyserver
   name: historyserver
 spec:
-  type: LoadBalancer
   ports:
     - port: 8188
       targetPort: 8188

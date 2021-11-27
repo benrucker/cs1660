@@ -9,7 +9,6 @@ metadata:
     io.kompose.service: datanode
   name: datanode
 spec:
-  type: LoadBalancer
   ports:
     - port: 9864
       targetPort: 9864

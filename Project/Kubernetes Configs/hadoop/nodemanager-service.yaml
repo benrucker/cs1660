@@ -9,7 +9,6 @@ metadata:
     io.kompose.service: nodemanager
   name: nodemanager
 spec:
-  type: LoadBalancer
   ports:
     - port: 8042
       targetPort: 8042

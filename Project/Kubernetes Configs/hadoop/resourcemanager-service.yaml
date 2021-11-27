@@ -9,7 +9,6 @@ metadata:
     io.kompose.service: resourcemanager
   name: resourcemanager
 spec:
-  type: LoadBalancer
   ports:
     - port: 8088
       targetPort: 8088
