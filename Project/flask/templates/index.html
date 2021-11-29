@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% for name, url in service_urls.items() %}
+    <div class='room hover'>
+        <a href="{{ url }}" target='_blank'>Launch {{ name }}</a></div>
+{% endfor %}
+
+{% endblock %}

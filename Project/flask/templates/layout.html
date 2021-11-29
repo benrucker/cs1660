@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Any Chatters?</title>
+    <style>
+        html {
+    --bg: #131416;
+    --darkBg: #1f211f;
+    --white: white;
+    --primary: hsl(123, 38%, 71%);
+    --secondary: var(--primary);
+    --error: #db897b;
+    --thumbBG: #90A4AE;
+    --scrollbarBG: var(--bg);
+    background-color: var(--bg);
+    color: var(--white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    /* color: white; */
+}
+
+a, a:visited {
+    color: var(--secondary);
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    padding: 10px 10% 10px 10%;
+    background-color: var(--darkBg);
+}
+
+#nav .navlogo {
+    text-decoration: none;
+    color: var(--primary);
+    margin: 0px;
+}
+
+#nav .navlogo::after {
+    content: "";
+    display: block;
+    height: 5px;
+    background-color: var(--primary);
+    width: 0;
+    transition: all 0.3s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+#nav .navlogo:hover::after {
+    width: 100%;
+}
+
+#nav .navlogo h1 {
+    margin: 0px;
+}
+
+#nav span.links .button {
+    margin: 0em 1em;
+    padding: 0.5em 0.75em;
+    text-decoration: none;
+    background-color: var(--primary);
+    border-radius: 0.5em;
+    color: var(--bg);
+    /* font-weight: bold; */
+}
+
+#nav span.links .button:hover {}
+
+.hover {
+    transition: box-shadow ease-in-out 0.4s;
+    box-shadow: 0px 3px 0px 0px rgba(0,0,0,0);
+}
+
+.hover:hover {
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.page {
+    width: 60%;
+    margin: auto;
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 0px;
+}
+
+.flash {
+    color: var(--bg);
+    width: 100%;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flash.info {
+    background-color: var(--primary);
+}
+
+.flash.error {
+    background-color: var(--error);
+}
+
+.flash span.close, .room .delete {
+    cursor: pointer;
+}
+
+form {
+    margin: 0em -0.5em;
+}
+
+form input, form button {
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 0.75em;
+    border-width: 0px;
+}
+
+form input:focus-visible, form button:focus-visible {
+    outline: 0px;
+}
+
+form input {
+    background-color: var(--darkBg);
+    color: var(--white);
+}
+
+form button {
+    background-color: var(--primary);
+    color: var(--bg);
+    /* font-weight: bold; */
+    cursor: pointer;
+}
+
+#messagePane {
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+#messageList {
+    height: auto;
+    overflow-y: scroll;
+    flex: 1 1 auto;
+}
+
+.message {
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+    background-color: var(--darkBg);
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.message .header {
+    border-bottom: 1px solid var(--primary);
+    color: #888888;
+}
+
+.message .header b {
+    font-weight: bold;
+    color: inherit
+}
+
+.message .header i {}
+
+.message .content {}
+
+.message.highlighted {
+    outline: var(--secondary);
+    outline-style: solid;
+    outline-offset: -3px;
+}
+
+#messageSend {
+    height: fit-content;
+    display: flex;
+}
+
+#message {
+    flex: 1 1 auto;
+}
+
+#sendButton {
+    flex: 0 0 auto;
+}
+
+body::-webkit-scrollbar {
+    width: 11px;
+}
+
+body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}
+
+#messageList::-webkit-scrollbar {
+    width: 11px;
+}
+
+#messageList {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+#messageList::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+#messageList::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}
+
+.room {
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+    background-color: var(--darkBg);
+    border-radius: 10px;
+    width: fit-content;
+    display: block;
+    text-decoration: none;
+    /* font-weight: bold; */
+    color: var(--white);
+    cursor: pointer;
+}
+
+.room:hover {
+    color: var(--primary);
+}
+
+.room .delete {
+    color: var(--secondary);
+}
+
+.room .delete:hover {
+    color: var(--primary);
+}
+
+.hide {
+    display: none;
+}
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <a href="/" class="navlogo">
+            <h1>Microservices Matrix</h1>
+        </a>
+    </div>
+    <div class="page">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="flash {{ category }}">
+            <span>{{ message }}</span>
+            <span class="close">&times;</span>
+        </div>
+        <br>
+        {% endfor %}
+        {% block body %}{% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
