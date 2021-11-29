@@ -20,7 +20,7 @@ while True:
             print('0000000000000000000 sonar is up')
         posted = subprocess.run(
             [
-                "curl", "-u", "admin:admin", "-d", "login=admin", "-d", "password=password", "-d", "previousPassword=admin", "-v", "http://localhost:9000/api/users/change_password"
+                "curl", "-u", "admin:admin", "-d", "login=admin", "-d", "password=cs1660", "-d", "previousPassword=admin", "-v", "http://localhost:9000/api/users/change_password"
             ], check=True, capture_output=True
         )
         print(f'0000000000000000000 {posted.stdout}')
