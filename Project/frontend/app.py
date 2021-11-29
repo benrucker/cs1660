@@ -82,7 +82,7 @@ def show_lb_url(api_instance, name, pretty_name):
     service = api_instance.read_namespaced_service(name, 'default')
     ip = service.status.load_balancer.ingress[0].ip
     port = service.spec.ports[0].port
-    print(f"Open {pretty_name} by clicking this link or pasting it in your browser:")
+    print(f"\nOpen {pretty_name} by clicking this link or pasting it in your browser:")
     print(f"\thttp://{ip}:{port}")
 
 
@@ -113,10 +113,8 @@ def wait_for_launch(api_instance, name):
                 print(name, 'is running')
                 return resp
             else:
-                print(name, 'is pending')
                 time.sleep(1)
         except ApiException as e:
-            print(e)
             time.sleep(1)
 
 
@@ -144,8 +142,5 @@ if __name__ == '__main__':
     for i, service in enumerate(indexed):
         print(f'{i+1}: {service}')
 
-    choice = int(input('> ')) - 1
-
-    print(f'Launching {indexed[choice]}...')
-    
+    choice = int(input('> ')) - 1    
     launch_service(SERVICES[indexed[choice]], core_v1)
