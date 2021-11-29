@@ -142,5 +142,5 @@ if __name__ == '__main__':
     for i, service in enumerate(indexed):
         print(f'{i+1}: {service}')
 
-    choice = int(input('> ')) - 1    
+    choice = int(input('> ')) - 1
     launch_service(SERVICES[indexed[choice]], core_v1)
