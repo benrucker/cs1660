@@ -25,7 +25,7 @@ cd cs1660/Project/Kubernetes\ Configs
 # on a Unix machine:
 ./startup.sh
 ```
-7. Wait for the `flask` pod to begin. This is our GUI front-end microservice that allows us to use the microservices. (Though the old terminal application still exists as `frontend`, it is not updated with full functionality and should not be used)
+7. Wait for the `flask` pod to begin. This is our GUI front-end microservice that allows us to use the other microservices. (the old terminal application still exists as `frontend` and should not be used)
 ```sh
 kubectl get pods -w
 ```
