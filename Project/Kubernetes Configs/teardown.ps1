@@ -12,6 +12,11 @@ kubectl delete pod/sonar
 kubectl delete pod/spark
 kubectl delete pod/spark-worker
 
+kubectl delete pvc/datanode
+kubectl delete pvc/datanode2
+kubectl delete pvc/hadoop-historyserver
+kubectl delete pvc/namenode
+
 kubectl delete service/datanode
 kubectl delete service/datanode2
 kubectl delete service/flask
