@@ -52,3 +52,6 @@ Password: cs1660
 
 
 ## Video Demo
+
+https://user-images.githubusercontent.com/12519846/143804180-e32766de-c0e7-4660-9cc6-6067527045e0.mp4
+
