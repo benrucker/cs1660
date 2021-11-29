@@ -1,4 +1,4 @@
-# Microservices Matrix (Project Option 1 - Kubernetes Cluster)
+# Microservices Matrix (Project Option 1)
 
 ## Steps
 
@@ -37,6 +37,18 @@ kubectl get pods -w
         3. Paste it into the URL bar of your browser and append the port of the service (`5000` by default)
             * e.g. `11.11.11.11:5000`
 9. Run the microservice you desire! 🎉
+
+## Credentials
+
+### Spark
+
+Username: admin
+
+Password: cs1660
+
+### Jupyter
+
+Password: cs1660
 
 
 ## Video Demo
