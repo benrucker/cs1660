@@ -1,55 +1,42 @@
-# Project (Option 1 - Kubernetes Cluster)
-
-## Docker Image Info:
-
-* Terminal app:
-    * https://hub.docker.com/repository/docker/brucker/frontend
-    * [frontend/](frontend/)
-* Spark:
-    * https://hub.docker.com/repository/docker/brucker/spark
-    * [spark/](spark/)
-* Hadoop:
-    * https://hub.docker.com/repository/docker/brucker/hadoop
-    * [hadoop/](hadoop/)
-* Jupyter Notebook:
-    * https://hub.docker.com/repository/docker/brucker/datascience-notebook
-    * [jupyternb/](jupyternb/)
-* SonarQube & SonarScanner
-    * https://hub.docker.com/r/sonarsource/sonar-scanner-cli
-    * [sonar/](sonar/)
-
-## Screenshot
-
-![screenie](Containers%20Active.png)
+# Microservices Matrix (Project Option 1 - Kubernetes Cluster)
 
 ## Steps
 
 1. Activate GKE
 2. Make a default cluster
-3. Authenticate a cloud shell to the cluster
-4. Pull this repo to the shell
+3. Authenticate a cloud shell to the Kubernetes cluster
+    * i.e. grant access to using `kubectl` on either a local terminal or on a cloud shell
+4. Pull this repo to the shell that is authenticated with `kubectl`
+```sh
+git clone https://github.com/benrucker/cs1660
+```
 5. cd to the config folder
 ```sh
 cd cs1660/Project/Kubernetes\ Configs
 ```
-6. use kubectl to make the pods
+6. Run the startup script
 ```sh
-kubectl apply -f pod-frontend.yaml
-kubectl apply -f pod-hadoop.yaml
-kubectl apply -f pod-jupyter.yaml
-kubectl apply -f pod-sonar.yaml
-kubectl apply -f pod-spark.yaml
+# on windows:
+./startup.ps1
+
+# on a Unix machine:
+./startup.sh
 ```
-7. Wait for the pods to begin
+7. Wait for the `flask` pod to begin
 ```sh
-watch kubectl get all
+kubectl get pods -w
 ```
-8. Connect to the frontend pod
-```sh
-kubectl exec --stdin --tty pod/frontend -- /bin/sh
-```
-9. Run the terminal app
-```sh
-python app.py
-```
-10. Done! 🎉
+8. Connect to the `flask` service
+    * This can be done through the GCP UI:
+        1. Navigate to the Kubernetes cluster
+        2. Click "Services & Ingress"
+        3. Click on the external URL to the `flask` service
+    * Or using `kubectl`:
+        1. Run `kubectl get services`
+        2. Copy the `External URL` of the `flask` service
+        3. Paste it into the URL bar of your browser and append the port of the service (`5000` by default)
+            * e.g. `11.11.11.11:5000`
+9. Run the microservice you desire! 🎉
+
+
+## Video Demo
