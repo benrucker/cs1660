@@ -5,7 +5,10 @@
 1. Activate GKE
 2. Make a default cluster
 3. Authenticate a cloud shell to the Kubernetes cluster
-    * i.e. grant access to using `kubectl` on either a local terminal or on a cloud shell
+    1. Navigate to your Kubernetes cluster list
+    2. Click the name of your new cluster
+    3. Click `Connect`
+    4. Give yourself command-line access to either a local terminal or a gcloud shell
 4. Pull this repo to the shell that is authenticated with `kubectl`
 ```sh
 git clone https://github.com/benrucker/cs1660
